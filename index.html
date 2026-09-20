@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#3b7d3b" />
+  <meta name="description" content="Minecraft LE — Original voxel sandbox game and private server platform by LEGAME Studio" />
+  <meta name="author" content="LEGAME Studio" />
+  <title>Minecraft LE</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div id="loading-screen">
+    <div class="loading-content">
+      <img src="img/logo-placeholder.svg" alt="Minecraft LE" class="loading-logo" />
+      <h1>Minecraft LE</h1>
+      <p class="studio">Developed by LEGAME Studio</p>
+      <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+      <p id="loading-text">Initializing...</p>
+    </div>
+  </div>
+
+  <div id="main-menu" class="screen hidden">
+    <div class="menu-background"></div>
+    <div class="menu-container">
+      <div class="logo-area">
+        <img src="img/logo-placeholder.svg" alt="Minecraft LE Logo" class="main-logo" />
+        <h1 class="game-title">Minecraft LE</h1>
+        <p class="studio-tag">Developed by LEGAME Studio</p>
+      </div>
+      <nav class="main-nav">
+        <button class="menu-btn primary" data-action="play">Play</button>
+        <button class="menu-btn" data-action="worlds">Worlds</button>
+        <button class="menu-btn" data-action="servers">Servers</button>
+        <button class="menu-btn" data-action="friends">Friends</button>
+        <button class="menu-btn" data-action="character">Character</button>
+        <button class="menu-btn" data-action="marketplace">Marketplace</button>
+        <button class="menu-btn" data-action="addons">Add-ons</button>
+        <button class="menu-btn" data-action="settings">Settings</button>
+        <button class="menu-btn" data-action="achievements">Achievements</button>
+        <button class="menu-btn" data-action="help">Help</button>
+        <button class="menu-btn secondary" data-action="about">About</button>
+      </nav>
+      <div class="menu-footer">
+        <span>Minecraft LE v0.1.0-alpha</span>
+        <span>© LEGAME Studio</span>
+      </div>
+    </div>
+  </div>
+
+  <div id="worlds-screen" class="screen hidden">
+    <header class="screen-header">
+      <button class="back-btn" data-back="main-menu">← Back</button>
+      <h2>Worlds</h2>
+    </header>
+    <div class="screen-content">
+      <div class="action-bar">
+        <button class="btn primary" id="create-world-btn">Create New World</button>
+      </div>
+      <div id="worlds-list" class="card-list"></div>
+    </div>
+  </div>
+
+  <div id="create-world-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Create New World</h3>
+      <form id="create-world-form">
+        <label>World Name <input type="text" name="name" value="New World" required maxlength="32" /></label>
+        <label>Seed (optional) <input type="text" name="seed" placeholder="Leave empty for random" /></label>
+        <label>Game Mode
+          <select name="gamemode">
+            <option value="survival">Survival</option>
+            <option value="creative">Creative</option>
+            <option value="adventure">Adventure</option>
+            <option value="spectator">Spectator</option>
+          </select>
+        </label>
+        <label>Difficulty
+          <select name="difficulty">
+            <option value="peaceful">Peaceful</option>
+            <option value="easy">Easy</option>
+            <option value="normal" selected>Normal</option>
+            <option value="hard">Hard</option>
+          </select>
+        </label>
+        <label class="checkbox"><input type="checkbox" name="cheats" /> Allow Cheats</label>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" data-close="create-world-modal">Cancel</button>
+          <button type="submit" class="btn primary">Create</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="servers-screen" class="screen hidden">
+    <header class="screen-header">
+      <button class="back-btn" data-back="main-menu">← Back</button>
+      <h2>Servers</h2>
+    </header>
+    <div class="screen-content">
+      <div class="tabs">
+        <button class="tab active" data-tab="my-servers">My Servers</button>
+        <button class="tab" data-tab="saved-servers">Saved Servers</button>
+        <button class="tab" data-tab="invitations">Invitations</button>
+      </div>
+      <div id="my-servers-panel" class="tab-panel active">
+        <div class="action-bar"><button class="btn primary" id="create-server-btn">Create Private Server</button></div>
+        <div id="my-servers-list" class="card-list"></div>
+      </div>
+      <div id="saved-servers-panel" class="tab-panel hidden">
+        <div class="action-bar"><button class="btn primary" id="add-server-btn">Add Server</button></div>
+        <div id="saved-servers-list" class="card-list"></div>
+      </div>
+      <div id="invitations-panel" class="tab-panel hidden">
+        <div id="invitations-list" class="card-list"><div class="empty-state"><p>No pending invitations.</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="create-server-modal" class="modal hidden">
+    <div class="modal-content wide">
+      <h3>Create Private Server</h3>
+      <form id="create-server-form">
+        <div class="form-grid">
+          <label>Server Name <input type="text" name="name" required maxlength="32" placeholder="My Private Server" /></label>
+          <label>Description <input type="text" name="description" maxlength="128" /></label>
+          <label>Game Mode
+            <select name="gamemode"><option value="survival">Survival</option><option value="creative">Creative</option><option value="adventure">Adventure</option></select>
+          </label>
+          <label>Difficulty
+            <select name="difficulty"><option value="peaceful">Peaceful</option><option value="easy">Easy</option><option value="normal" selected>Normal</option><option value="hard">Hard</option></select>
+          </label>
+          <label>Max Players <input type="number" name="maxPlayers" value="10" min="2" max="50" /></label>
+          <label>Privacy
+            <select name="privacy"><option value="private">Private (Invite only)</option><option value="friends">Friends</option><option value="code">Invite Code</option></select>
+          </label>
+        </div>
+        <div class="checkbox-group">
+          <label class="checkbox"><input type="checkbox" name="cheats" /> Allow Cheats</label>
+          <label class="checkbox"><input type="checkbox" name="pvp" checked /> PvP</label>
+          <label class="checkbox"><input type="checkbox" name="mobs" checked /> Mob Spawning</label>
+          <label class="checkbox"><input type="checkbox" name="weather" checked /> Weather Cycle</label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" data-close="create-server-modal">Cancel</button>
+          <button type="submit" class="btn primary">Create Server</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="add-server-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Add Server</h3>
+      <form id="add-server-form">
+        <label>Server Name / Nickname <input type="text" name="nickname" required maxlength="32" /></label>
+        <label>Join Code or Address <input type="text" name="code" required placeholder="Enter private join code" /></label>
+        <label>Notes (optional) <input type="text" name="notes" maxlength="100" /></label>
+        <div class="modal-actions">
+          <button type="button" class="btn secondary" data-close="add-server-modal">Cancel</button>
+          <button type="submit" class="btn primary">Save Server</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="settings-screen" class="screen hidden">
+    <header class="screen-header">
+      <button class="back-btn" data-back="main-menu">← Back</button>
+      <h2>Settings</h2>
+    </header>
+    <div class="screen-content settings-layout">
+      <aside class="settings-nav">
+        <button class="settings-tab active" data-settings="video">Video</button>
+        <button class="settings-tab" data-settings="audio">Audio</button>
+        <button class="settings-tab" data-settings="gameplay">Gameplay</button>
+        <button class="settings-tab" data-settings="controls">Controls</button>
+        <button class="settings-tab" data-settings="accessibility">Accessibility</button>
+        <button class="settings-tab" data-settings="account">Account</button>
+      </aside>
+      <div class="settings-panels">
+        <div id="settings-video" class="settings-panel active">
+          <h3>Video</h3>
+          <label>Render Distance <input type="range" min="2" max="32" value="12" id="render-distance" /> <span id="rd-value">12</span></label>
+          <label>Graphics <select id="graphics-preset"><option>Low</option><option selected>Medium</option><option>High</option><option>Ultra</option></select></label>
+        </div>
+        <div id="settings-audio" class="settings-panel hidden"><h3>Audio</h3><p>Volume controls placeholder.</p></div>
+        <div id="settings-gameplay" class="settings-panel hidden"><h3>Gameplay</h3><p>Gameplay options placeholder.</p></div>
+        <div id="settings-controls" class="settings-panel hidden"><h3>Controls</h3><p>Keybinds and sensitivity placeholder.</p></div>
+        <div id="settings-accessibility" class="settings-panel hidden"><h3>Accessibility</h3><p>Accessibility options placeholder.</p></div>
+        <div id="settings-account" class="settings-panel hidden">
+          <h3>Account</h3>
+          <p>Minecraft LE uses its own independent account system operated by LEGAME Studio.</p>
+          <p>It is not linked to any Mojang or Microsoft account.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="about-screen" class="screen hidden">
+    <header class="screen-header">
+      <button class="back-btn" data-back="main-menu">← Back</button>
+      <h2>About</h2>
+    </header>
+    <div class="screen-content about-content">
+      <img src="img/logo-placeholder.svg" alt="Minecraft LE" class="about-logo" />
+      <h1>Minecraft LE</h1>
+      <p class="studio">Developed and published by <strong>LEGAME Studio</strong></p>
+      <p>Minecraft LE is an original voxel sandbox game and private server platform.</p>
+      <p>It is a completely independent project and is not affiliated with, endorsed by, or connected to Mojang Studios, Microsoft, or the official Minecraft game.</p>
+      <hr />
+      <p><strong>Version:</strong> 0.1.0-alpha (Foundation Build)</p>
+      <p><strong>Engine:</strong> LEGAME Voxel Engine (early stage)</p>
+    </div>
+  </div>
+
+  <div id="game-container" class="screen hidden">
+    <canvas id="game-canvas"></canvas>
+    <div id="hud" class="hidden"><div id="crosshair">+</div></div>
+    <div id="pause-menu" class="hidden">
+      <button class="menu-btn" data-action="resume">Resume</button>
+      <button class="menu-btn" data-action="save-exit">Save & Exit</button>
+    </div>
+  </div>
+
+  <div id="toast-container"></div>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
