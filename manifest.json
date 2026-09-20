@@ -1,0 +1,27 @@
+{
+  "name": "Minecraft LE",
+  "short_name": "Minecraft LE",
+  "description": "Minecraft LE — A complete original voxel sandbox game and private server platform developed by LEGAME Studio.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#1a1a1a",
+  "theme_color": "#3b7d3b",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    {
+      "src": "img/logo-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "img/logo-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "lang": "en",
+  "dir": "ltr"
+}
