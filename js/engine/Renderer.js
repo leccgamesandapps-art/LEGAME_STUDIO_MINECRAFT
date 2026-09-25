@@ -1,7 +1,6 @@
 /**
  * Minecraft LE — Voxel / 3D Renderer
  * LEGAME Studio
- * Foundation for WebGL / Three.js based voxel rendering
  */
 
 export class Renderer {
@@ -18,51 +17,66 @@ export class Renderer {
     this.ctx = this.canvas.getContext('2d');
     this.resize();
     this.ready = true;
-    console.log('[Renderer] Initialized (2D fallback). Ready for Three.js / WebGL upgrade.');
+    console.log('[Renderer] Ready (2D foundation). Three.js upgrade path available.');
     return true;
   }
 
   resize() {
-    this.width = this.canvas.clientWidth;
-    this.height = this.canvas.clientHeight;
-    this.canvas.width = this.width * (window.devicePixelRatio || 1);
-    this.canvas.height = this.height * (window.devicePixelRatio || 1);
-    if (this.ctx) this.ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+    this.width = this.canvas.clientWidth || window.innerWidth;
+    this.height = this.canvas.clientHeight || window.innerHeight;
+    const dpr = window.devicePixelRatio || 1;
+    this.canvas.width = this.width * dpr;
+    this.canvas.height = this.height * dpr;
+    if (this.ctx) this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  clear(color = '#1a2a1a') {
+  clear() {
     if (!this.ctx) return;
-    this.ctx.fillStyle = color;
-    this.ctx.fillRect(0, 0, this.width, this.height);
-  }
-
-  renderPlaceholder(playerY = 64) {
-    if (!this.ctx) return;
-    this.clear();
     const grad = this.ctx.createLinearGradient(0, 0, 0, this.height);
-    grad.addColorStop(0, '#87CEEB');
-    grad.addColorStop(0.6, '#E0F6FF');
-    grad.addColorStop(1, '#3b7d3b');
+    grad.addColorStop(0, '#5BA3D9');
+    grad.addColorStop(0.45, '#A8D8F0');
+    grad.addColorStop(0.7, '#C8E6C9');
+    grad.addColorStop(1, '#4A7C4A');
     this.ctx.fillStyle = grad;
     this.ctx.fillRect(0, 0, this.width, this.height);
-    this.ctx.fillStyle = '#2d5a2d';
-    this.ctx.fillRect(0, this.height * 0.65, this.width, this.height * 0.35);
-    this.ctx.strokeStyle = 'rgba(255,255,255,0.8)';
-    this.ctx.lineWidth = 2;
-    const cx = this.width / 2, cy = this.height / 2;
-    this.ctx.beginPath();
-    this.ctx.moveTo(cx - 10, cy); this.ctx.lineTo(cx + 10, cy);
-    this.ctx.moveTo(cx, cy - 10); this.ctx.lineTo(cx, cy + 10);
-    this.ctx.stroke();
-    this.ctx.fillStyle = '#fff';
-    this.ctx.font = '14px monospace';
-    this.ctx.fillText('Minecraft LE — Voxel Engine Foundation', 12, 24);
-    this.ctx.fillText('LEGAME Studio | Renderer ready for Three.js upgrade', 12, 44);
   }
 
-  setThreeJSScene(scene, camera) {
-    this.threeScene = scene;
-    this.threeCamera = camera;
-    console.log('[Renderer] Three.js scene attached (stub)');
+  renderWorld(player) {
+    if (!this.ctx) return;
+    this.clear();
+
+    const horizon = this.height * 0.55 + player.pitch * 80;
+    this.ctx.fillStyle = '#3d6b3d';
+    this.ctx.fillRect(0, Math.max(0, horizon), this.width, this.height);
+
+    this.ctx.strokeStyle = 'rgba(0,0,0,0.15)';
+    this.ctx.lineWidth = 1;
+    const gridSize = 40;
+    for (let i = -20; i < 40; i++) {
+      const y = horizon + i * gridSize * (1 + Math.abs(player.pitch));
+      if (y > this.height) break;
+      this.ctx.beginPath();
+      this.ctx.moveTo(0, y);
+      this.ctx.lineTo(this.width, y);
+      this.ctx.stroke();
+    }
+
+    const cx = this.width / 2;
+    const cy = this.height / 2;
+    this.ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+    this.ctx.lineWidth = 2;
+    this.ctx.beginPath();
+    this.ctx.moveTo(cx - 12, cy); this.ctx.lineTo(cx + 12, cy);
+    this.ctx.moveTo(cx, cy - 12); this.ctx.lineTo(cx, cy + 12);
+    this.ctx.stroke();
+
+    this.ctx.fillStyle = 'rgba(0,0,0,0.45)';
+    this.ctx.fillRect(8, 8, 320, 78);
+    this.ctx.fillStyle = '#ffffff';
+    this.ctx.font = '13px monospace';
+    this.ctx.fillText('Minecraft LE  |  LEGAME Studio', 16, 28);
+    this.ctx.fillText(`XYZ: ${player.x.toFixed(1)}  /  ${player.y.toFixed(1)}  /  ${player.z.toFixed(1)}`, 16, 48);
+    this.ctx.fillText('WASD move  |  Mouse look  |  Space/C up-down  |  Shift sprint', 16, 68);
+    this.ctx.fillText('Click to capture mouse  |  Esc pause', 16, 88);
   }
 }
