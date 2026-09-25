@@ -15,20 +15,43 @@
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; overflow: hidden; font-family: var(--font); background: var(--bg-dark); color: var(--text); user-select: none; }
-#loading-screen { position: fixed; inset: 0; background: linear-gradient(160deg, #0a0a0a 0%, #1a2a1a 100%); display: flex; align-items: center; justify-content: center; z-index: 9999; }
-.loading-content { text-align: center; }
-.loading-logo { width: 120px; height: 120px; margin-bottom: 1rem; }
-.loading-content h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: 0.25rem; }
-.studio { color: var(--text-dim); font-size: 0.95rem; margin-bottom: 2rem; }
-.progress-bar { width: 280px; height: 8px; background: #222; border-radius: 4px; overflow: hidden; margin: 0 auto 1rem; }
-.progress-fill { height: 100%; width: 0%; background: var(--accent); transition: width 0.3s ease; }
+
+/* ===== Application Splash (Display) ===== */
+#loading-screen {
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at center, #0d1a0d 0%, #050805 70%, #020302 100%);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 9999;
+}
+.loading-content { text-align: center; padding: 2rem; }
+.loading-logo {
+  width: 96px; height: 96px; margin: 0 auto 1.25rem;
+  object-fit: contain; border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.45);
+}
+.loading-content h1 {
+  font-size: 2.2rem; font-weight: 800; letter-spacing: 0.5px;
+  margin-bottom: 0.35rem; color: #f0f0f0;
+}
+.studio { color: #8a9a8a; font-size: 0.95rem; margin-bottom: 2.25rem; }
+.progress-bar {
+  width: 240px; height: 6px;
+  background: rgba(255,255,255,0.08); border-radius: 3px;
+  overflow: hidden; margin: 0 auto 1rem;
+}
+.progress-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #2a5a2a, #3b7d3b, #4a9a4a);
+  border-radius: 3px; transition: width 0.35s ease;
+}
 #loading-text { color: var(--text-dim); font-size: 0.85rem; }
+
 .screen { position: fixed; inset: 0; display: flex; flex-direction: column; background: var(--bg-dark); }
 .screen.hidden { display: none; }
 .menu-background { position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 20%, rgba(59,125,59,0.15) 0%, transparent 50%), linear-gradient(180deg, #0d0d0d 0%, #151515 100%); z-index: 0; }
 .menu-container { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 2rem; gap: 1.5rem; }
 .logo-area { text-align: center; }
-.main-logo { width: 100px; height: 100px; margin-bottom: 0.5rem; }
+.main-logo { width: 100px; height: 100px; margin-bottom: 0.5rem; border-radius: 16px; }
 .game-title { font-size: 2.8rem; font-weight: 800; letter-spacing: 2px; }
 .studio-tag { color: var(--text-dim); font-size: 0.95rem; }
 .main-nav { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; max-width: 320px; }
