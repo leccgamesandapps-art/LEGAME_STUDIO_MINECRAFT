@@ -2,10 +2,11 @@
   "id": "https://minecraft-le.vercel.app/",
   "name": "Minecraft LE",
   "short_name": "Minecraft LE",
-  "description": "Minecraft LE — A complete original voxel sandbox game and private server platform developed by LEGAME Studio.",
+  "description": "Minecraft LE — A complete original voxel sandbox game and private server platform developed by LEGAME Studio. Play, build, explore and host private servers.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "any",
   "background_color": "#1a1a1a",
   "theme_color": "#3b7d3b",
@@ -45,5 +46,48 @@
       "type": "image/png",
       "purpose": "maskable"
     }
-  ]
+  ],
+  "screenshots": [
+    {
+      "src": "img/grok_1790254213457.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Minecraft LE – Main Menu"
+    },
+    {
+      "src": "img/grok_1790254213457.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Minecraft LE – Game Experience"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Play",
+      "short_name": "Play",
+      "description": "Start playing Minecraft LE",
+      "url": "./?action=play",
+      "icons": [{ "src": "img/grok_1790254217395.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Worlds",
+      "short_name": "Worlds",
+      "description": "Manage your worlds",
+      "url": "./?action=worlds",
+      "icons": [{ "src": "img/grok_1790254217395.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Private Servers",
+      "short_name": "Servers",
+      "description": "Create or join private servers",
+      "url": "./?action=servers",
+      "icons": [{ "src": "img/grok_1790254217395.png", "sizes": "192x192" }]
+    }
+  ],
+  "launch_handler": {
+    "client_mode": ["navigate-existing", "auto"]
+  },
+  "handle_links": "preferred"
 }
