@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#3b7d3b" />
+  <title>Minecraft LE — Game</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/game.css" />
+</head>
+<body class="game-page">
+  <div id="game-container">
+    <canvas id="game-canvas"></canvas>
+    <div id="hud">
+      <div id="crosshair">+</div>
+      <div id="hotbar"></div>
+      <div id="debug-info">Minecraft LE | LEGAME Studio</div>
+    </div>
+    <div id="pause-menu" class="hidden">
+      <h2>Game Paused</h2>
+      <button class="menu-btn" id="btn-resume">Resume</button>
+      <button class="menu-btn" id="btn-settings">Settings</button>
+      <button class="menu-btn" id="btn-exit">Save & Exit</button>
+    </div>
+  </div>
+  <script type="module">
+    import { Engine } from './js/engine/Engine.js';
+    const canvas = document.getElementById('game-canvas');
+    const engine = new Engine(canvas);
+    engine.init();
+    engine.start();
+    const pauseMenu = document.getElementById('pause-menu');
+    document.addEventListener('keydown', (e) => {
+      if (e.code === 'Escape') {
+        pauseMenu.classList.toggle('hidden');
+        if (pauseMenu.classList.contains('hidden')) engine.start();
+        else engine.stop();
+      }
+    });
+    document.getElementById('btn-resume')?.addEventListener('click', () => {
+      pauseMenu.classList.add('hidden');
+      engine.start();
+    });
+    document.getElementById('btn-exit')?.addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+    console.log('%cMinecraft LE Game Engine', 'color:#3b7d3b;font-weight:bold');
+  </script>
+</body>
+</html>
